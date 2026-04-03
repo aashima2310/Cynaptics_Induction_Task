@@ -30,11 +30,65 @@ python generate.py
 
 ## Sample Output
 ```
-ROMEO:
-What say you to this matter?
-JULIET:
-I know not what to say, my lord,
-But I will speak the truth.
+To be an air abused
+Sixt the commission.
+
+First Servingman:
+He's to bear them.
+
+Second Servingman:
+Sir, I pray, I think 'twas grieve no less.
+
+First Servingman:
+She shall be so so: 'tis led as three sins yet
+uspicensied in his steal.
+
+Second Servingman:
+Binheees:
+But in their dogs tempt, and dartell your general;
+And not the Volsces are bared on
+An over sound a blows for you;
+For you, mistress, as I will go hunt
+In your cannot come.
+
+First Servingman:
+I would endure it were as it was a groan,
+His fault but two years a sisterhority;
+So true, that therefore I have stay to you.
+
+First Gentleman:
+Who'll not till you do, money?
+
+Second Watchman:
+Hapster no house of you?
+
+Second Servingman:
+My lord, ere she looks upon me
+Your hungry's apparet.
+
+CORIOLANUS:
+This is as your limitiest woman
+That Angelo; let you be battle.
+
+CORIOLANUS:
+I tongues, consudges, credit no first.
+
+CORIOLANUS:
+Ay, do feel 't.
+
+CORIOLANUS:
+I should not wrong aundred, for it.
+
+CORIOLANUS:
+That will not so contrive: I
+From love a grave as I jot upon thee,
+As I have poison'd my hand of my ancient:
+So was breathed; though crown'd, man
+Of my letters adversition, when 'tis
+To stole jealous queen, and my highness cannibble.
+
+First Citizen:
+No, he's one
 ```
 
 ---
@@ -72,3 +126,11 @@ LayerNorm → Linear → logits
 Custom BPE tokenizer trained on Shakespeare data.
 Vocab size 1000 — better than character level (65),
 smaller than GPT2 (50257).
+
+## Loss on training
+step 9600 | train 2.4423 | val 3.5417 | ppl 34.53
+step 9800 | train 2.4648 | val 3.4633 | ppl 31.92
+Training complete!
+
+training loss = 2.4648
+val_loss = 3.4633
