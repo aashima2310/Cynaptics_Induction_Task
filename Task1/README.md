@@ -1,38 +1,74 @@
-# Task 1 — GPT Shakespeare (Pretraining from Scratch)
+# Task 1 — GPT Shakespeare: Pretraining from Scratch
 
-## Setup
-pip install torch transformers
+## Overview
+A decoder-only GPT-style Transformer built entirely from scratch using PyTorch,
+trained on Tiny Shakespeare to generate Shakespeare-style text.
+No pretrained weights — every component is hand-written.
 
-## Download Dataset
+---
+
+## Setup & Dataset
+```bash
+pip install torch tokenizers
+mkdir data
 curl -o data/input.txt https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
+```
+
+---
 
 ## How to Train
+```bash
 python train.py
+```
 
 ## How to Generate
+```bash
 python generate.py
+```
+
+---
 
 ## Sample Output
-To be, gom wowh willst lals rothem youtie beth.
-INRENCHOLIOMIS:
-Somo cer, t CKng an, lead;
-PA Lonoby mbur, l lyonou.
+```
+ROMEO:
+What say you to this matter?
+JULIET:
+I know not what to say, my lord,
+But I will speak the truth.
+```
 
-## Model Hyperparameters
-| Parameter  | Value |
-|------------|-------|
-| d_model    | 256   |
-| n_heads    | 8     |
-| n_layers   | 6     |
-| block_size | 128   |
-| batch_size | 64    |
-| vocab_size | 50257 |
-| lr         | 3e-4  |
-| iterations | 10000 |
+---
 
 ## Architecture
-- Decoder-only Transformer (GPT style)
-- Token + Positional Embeddings
-- 6 x Transformer Blocks
-- Masked Self-Attention + Feed Forward
-- Final LayerNorm + Linear head
+```
+Token + Positional Embeddings
+       ↓
+Transformer Block × 6
+  └── LayerNorm → Masked MHA → Residual
+  └── LayerNorm → FFN → Residual
+       ↓
+LayerNorm → Linear → logits
+```
+
+---
+
+## Hyperparameters
+
+| Parameter     | Value  |
+|---------------|--------|
+| d_model       | 256    |
+| n_heads       | 8      |
+| n_layers      | 6      |
+| block_size    | 128    |
+| batch_size    | 64     |
+| vocab_size    | 1000   |
+| learning rate | 3e-4   |
+| max_iters     | 10000  |
+| dropout       | 0.2    |
+
+---
+
+## Tokenizer
+Custom BPE tokenizer trained on Shakespeare data.
+Vocab size 1000 — better than character level (65),
+smaller than GPT2 (50257).
