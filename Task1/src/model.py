@@ -7,23 +7,18 @@ class GPT(nn.Module):
         super().__init__()
         self.token_embedding    = nn.Embedding(vocab_size, d_model)
         self.position_embedding = nn.Embedding(block_size, d_model)
-
         self.blocks = nn.Sequential(
             *[TransformerBlock(d_model, n_heads, block_size) for _ in range(n_layers)]
-        )    # Stacking transformer layers
-
+        )
         self.ln_final = nn.LayerNorm(d_model)
         self.lm_head  = nn.Linear(d_model, vocab_size)
 
     def forward(self, x):
-        B, T = x.shape
-
+        B, T    = x.shape
         tok_emb = self.token_embedding(x)
         pos_emb = self.position_embedding(torch.arange(T, device=x.device))
-        x = tok_emb + pos_emb
-
-        x = self.blocks(x)
-        x = self.ln_final(x)
-        logits = self.lm_head(x)
-
+        x       = tok_emb + pos_emb
+        x       = self.blocks(x)
+        x       = self.ln_final(x)
+        logits  = self.lm_head(x)
         return logits
