@@ -2,13 +2,13 @@
 
 import torch
 
-vocab_size = 1000   # custom BPE vocab
-d_model    = 256
-n_heads    = 8
-n_layers   = 6
-block_size = 128
-batch_size = 64
-max_iters  = 10000
+VOCAB_SIZE = 1000
+D_MODEL    = 256
+N_HEADS    = 8
+N_LAYERS   = 6
+BLOCK_SIZE = 128
+BATCH_SIZE = 64
+MAX_ITERS  = 10000
 EVAL_EVERY = 200
 LR         = 3e-4
-device     = 'cuda' if torch.cuda.is_available() else 'cpu'
+DEVICE     = 'cuda' if torch.cuda.is_available() else 'cpu'
