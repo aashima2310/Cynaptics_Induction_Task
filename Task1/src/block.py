@@ -9,7 +9,7 @@ class TransformerBlock(nn.Module):
         self.ffn = FeedForward(d_model)
         self.ln1 = nn.LayerNorm(d_model)
         self.ln2 = nn.LayerNorm(d_model)
-        self.dropout = nn.Dropout(0.1)
+        self.dropout = nn.Dropout(0.2)
     
     def forward(self, x):
         x = x + self.dropout(self.attention(self.ln1(x)))   # attention
