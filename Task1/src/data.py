@@ -13,10 +13,10 @@ def load_data(file_path):
         tokenizer = load_tokenizer()
 
     # encode full text
-    encoded   = tokenizer.encode(text).ids
+    encoded    = tokenizer.encode(text).ids
     vocab_size = tokenizer.get_vocab_size()
 
-    print(f"Vocab size : {vocab_size}")
+    print(f"Vocab size     : {vocab_size}")
     print(f"Encoded length : {len(encoded)}")
 
     return encoded, tokenizer, vocab_size
