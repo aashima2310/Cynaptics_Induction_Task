@@ -1,12 +1,14 @@
 # All Hyperparameters 
 
-vocab_size  = 50257
-d_model     = 256
-n_heads    = 8
-n_layers    = 4
-block_size  = 128
-batch_size  = 32
-max_iters   = 5000
-EVAL_EVERY  = 200
-LR          = 3e-4
-device      = 'cuda' if __import__('torch').cuda.is_available() else 'cpu'
+import torch
+
+VOCAB_SIZE = 1000   # custom BPE vocab
+D_MODEL    = 256
+N_HEADS    = 8
+N_LAYERS   = 6
+BLOCK_SIZE = 128
+BATCH_SIZE = 64
+MAX_ITERS  = 10000
+EVAL_EVERY = 200
+LR         = 3e-4
+DEVICE     = 'cuda' if torch.cuda.is_available() else 'cpu'
