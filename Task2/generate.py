@@ -48,9 +48,8 @@ if __name__ == "__main__":
     tests = [
         ("Write a short poem about the moon", ""),
         ("Explain what gravity is in simple terms", ""),
-        ("Translate to French", "Good morning, how are you?"),
-        ("Summarize this text",
-         "The sun is a star at the center of our solar system.")
+        ("Explain Python in simple words",""),
+        ("Give 5 tips to stay productive","")
     ]
 
     for instruction, input_text in tests:
