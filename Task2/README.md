@@ -44,9 +44,9 @@ A silver lantern, cold and high.
 | Parameter     | Value        |
 |---------------|--------------|
 | model         | GPT-2 (124M) |
-| block_size    | 512          |
-| batch_size    | 8            |
-| epochs        | 3            |
+| block_size    | 256          |
+| batch_size    | 16            |
+| epochs        | 1           |
 | learning rate | 2e-5         |
 | optimizer     | AdamW        |
 | dataset       | tatsu-lab/alpaca |
