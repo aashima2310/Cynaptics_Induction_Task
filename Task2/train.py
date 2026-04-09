@@ -78,6 +78,12 @@ for epoch in range(EPOCHS):
         if step % EVAL_EVERY == 0:
             print(f"epoch {epoch+1} | step {step:4d} | loss {loss.item():.4f}")
 
+       
+        if step % 500 == 0 and step > 0:
+            model.save_pretrained('gpt2-alpaca')
+            tokenizer.save_pretrained('gpt2-alpaca')
+            print(f"  → saved at step {step}")
+
     # validation
     model.eval()
     total_val_loss = 0
@@ -99,3 +105,7 @@ for epoch in range(EPOCHS):
         print(f"  → best model saved!")
 
 print("Training complete!")
+
+model.save_pretrained('gpt2-alpaca')
+tokenizer.save_pretrained('gpt2-alpaca')
+print("Final model saved!")
