@@ -100,7 +100,7 @@ Custom Byte Pair Encoding (BPE) tokenizer trained on Shakespeare data.
 | Tokenizer       | Vocab size | Suitability        |
 |-----------------|------------|--------------------|
 | Character level | 65         | too basic          |
-| Custom BPE      | 1000       | perfect ✅          |
+| Custom BPE      | 1000       | perfect            |
 | GPT-2 pretrained| 50,257     | too large          |
 
 ---
