@@ -45,12 +45,14 @@ def generate(instruction, input_text="", max_new_tokens=200, temperature=0.7):
 
 
 if __name__ == "__main__":
-    tests = [
-        ("Write a short poem about the moon", ""),
-        ("Explain what gravity is in simple terms", ""),
-        ("Explain Python in simple words",""),
-        ("Give 5 tips to stay productive","")
-    ]
+   tests = [
+    ("Write a short poem about the moon", ""),
+    ("Explain what gravity is in simple terms", ""),
+    ("What are the benefits of exercise?", ""),
+    ("Summarize this text",
+     "The sun is a star at the center of our solar system.")
+    ("Give 5 tips to stay productive.")
+]
 
     for instruction, input_text in tests:
         print(f"\nInstruction: {instruction}")
