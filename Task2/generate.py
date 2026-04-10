@@ -54,9 +54,9 @@ if __name__ == "__main__":
     ("Give 5 tips to stay productive.")
 ]
 
-    for instruction, input_text in tests:
-        print(f"\nInstruction: {instruction}")
-        if input_text:
-            print(f"Input      : {input_text}")
-        print(f"Response   : {generate(instruction, input_text)}")
-        print("-" * 50)
+for instruction, input_text in tests:
+     print(f"\nInstruction: {instruction}")
+     if input_text:
+         print(f"Input      : {input_text}")
+         print(f"Response   : {generate(instruction, input_text)}")
+         print("-" * 50)
