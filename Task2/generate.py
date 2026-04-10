@@ -22,41 +22,75 @@ def format_prompt(instruction, input_text=""):
         )
 
 
-def generate(instruction, input_text="", max_new_tokens=200, temperature=0.7):
-    tokenizer = GPT2Tokenizer.from_pretrained('gpt2-alpaca')
-    model     = GPT2LMHeadModel.from_pretrained('gpt2-alpaca').to(DEVICE)
-    model.eval()
-
+def generate(model, tokenizer, instruction, input_text="", max_new_tokens=200, temperature=0.7):
     prompt = format_prompt(instruction, input_text)
     inputs = tokenizer(prompt, return_tensors='pt').to(DEVICE)
 
     with torch.no_grad():
         output = model.generate(
             inputs['input_ids'],
-            max_new_tokens = max_new_tokens,
-            temperature    = temperature,
-            do_sample      = True,
-            pad_token_id   = tokenizer.eos_token_id
+            max_new_tokens      = max_new_tokens,
+            temperature         = temperature,
+            do_sample           = True,
+            pad_token_id        = tokenizer.eos_token_id,
+            repetition_penalty  = 1.3,
+            no_repeat_ngram_size= 3,
         )
 
-    # decode only newly generated tokens
     generated = output[0][inputs['input_ids'].shape[1]:]
     return tokenizer.decode(generated, skip_special_tokens=True)
 
 
-if __name__ == "__main__":
-   tests = [
-    ("Write a short poem about the moon", ""),
-    ("Explain what gravity is in simple terms", ""),
-    ("What are the benefits of exercise?", ""),
-    ("Summarize this text",
-     "The sun is a star at the center of our solar system."),
-    ("Give 5 tips to stay productive.")
-]
+def save_outputs(model, tokenizer, tests, filename='sample_outputs.txt'):
+    with open(filename, 'w') as f:
+        for instruction, input_text in tests:
+            response = generate(model, tokenizer, instruction, input_text)
+            f.write(f"Instruction: {instruction}\n")
+            if input_text:
+                f.write(f"Input: {input_text}\n")
+            f.write(f"Response: {response}\n")
+            f.write("-" * 50 + "\n")
+            print(f"Instruction: {instruction}")
+            print(f"Response: {response}")
+            print("-" * 50)
+    print(f"\nOutputs saved to {filename}!")
 
-for instruction, input_text in tests:
-     print(f"\nInstruction: {instruction}")
-     if input_text:
-         print(f"Input      : {input_text}")
-         print(f"Response   : {generate(instruction, input_text)}")
-         print("-" * 50)
+
+def interactive_mode(model, tokenizer):
+    print("\n" + "="*50)
+    print("GPT-2 Alpaca — Interactive Mode")
+    print("Type 'quit' to exit")
+    print("="*50 + "\n")
+
+    while True:
+        instruction = input("Instruction: ").strip()
+        if instruction.lower() == 'quit':
+            print("Goodbye!")
+            break
+        input_text = input("Input (press Enter to skip): ").strip()
+        print("\nGenerating response...")
+        response = generate(model, tokenizer, instruction, input_text)
+        print(f"\nResponse: {response}")
+        print("-" * 50 + "\n")
+
+
+if __name__ == "__main__":
+    print("Loading model...")
+    tokenizer             = GPT2Tokenizer.from_pretrained('gpt2-alpaca')
+    tokenizer.pad_token   = tokenizer.eos_token
+    model                 = GPT2LMHeadModel.from_pretrained('gpt2-alpaca').to(DEVICE)
+    model.eval()
+    print("Model loaded!\n")
+
+    tests = [
+        ("Write a short poem about the moon", ""),
+        ("Explain what gravity is in simple terms", ""),
+        ("What are the benefits of exercise?", ""),
+        ("Summarize this text",
+         "The sun is a star at the center of our solar system."),
+        ("Give me 3 tips for better sleep", ""),
+    ]
+
+    save_outputs(model, tokenizer, tests)
+
+    interactive_mode(model, tokenizer)
