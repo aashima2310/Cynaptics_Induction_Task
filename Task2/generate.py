@@ -50,7 +50,7 @@ if __name__ == "__main__":
     ("Explain what gravity is in simple terms", ""),
     ("What are the benefits of exercise?", ""),
     ("Summarize this text",
-     "The sun is a star at the center of our solar system.")
+     "The sun is a star at the center of our solar system."),
     ("Give 5 tips to stay productive.")
 ]
 
