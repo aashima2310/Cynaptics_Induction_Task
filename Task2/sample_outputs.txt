@@ -1,0 +1,17 @@
+Instruction: Write a short poem about the moon
+Response: Once upon another day, I awoke to find myself surrounded by strange creatures of unknown origin!
+--------------------------------------------------
+Instruction: Explain what gravity is in simple terms
+Response: Gravity is a force created by matter and energy, which forms when two particles collide together as if they are revolving around each other like magnets or lasers.
+--------------------------------------------------
+Instruction: What are the benefits of exercise?
+Response: The primary benefit for exercising includes improved health and wellbeing, increased alertness, reduced risk of chronic diseases such as diabetes or heart disease (heart attack). Regular physical activity can also help to reduce stress levels by helping with concentration, coordination skills like walking, running, yoga exercises and more. Exercise helps maintain muscle tone during strenuous activities because it increases strength throughout the body. Additionally due in part on hormonal changes caused by hormones released into the bloodstream through our bodies' growth hormone system, regular vigorous weightlifting provides optimal energy balance without impairing performance.
+--------------------------------------------------
+Instruction: Summarize this text
+Input: The sun is a star at the center of our solar system.
+Response: Sunshine shines through many shades and shapes in its path from Earth to the stars on earth.
+--------------------------------------------------
+Instruction: Give me 3 tips for better sleep
+Response: 1) Don't be afraid to take breaks from work or school; it can help keep you energized and alert throughout the day. 
+2’ Take time to relax, eat something healthy and enjoy yourself while at work.3
+--------------------------------------------------
