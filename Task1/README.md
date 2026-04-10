@@ -2,19 +2,42 @@
 
 ## Overview
 A decoder-only GPT-style Transformer built entirely from scratch using PyTorch,
-trained on Tiny Shakespeare to generate Shakespeare-style text.
-No pretrained weights — every component is hand-written.
+trained on the Tiny Shakespeare dataset (~1M characters) to generate
+Shakespeare-style text by predicting the next token in a sequence.
+
+No pretrained weights used — every component is hand-written including
+a custom BPE tokenizer trained specifically on Shakespeare data.
 
 ---
 
-## Setup & Dataset
-```bash
-pip install torch tokenizers
-mkdir data
-curl -o data/input.txt https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
+## Project Structure
+```
+Task1/
+├── src/
+│   ├── tokenizer.py    ← custom BPE tokenizer
+│   ├── data.py         ← dataset loading + batch generation
+│   ├── attention.py    ← masked single + multi head attention
+│   ├── ffn.py          ← feed forward network
+│   ├── block.py        ← transformer block
+│   └── model.py        ← full GPT model
+├── config.py           ← all hyperparameters
+├── train.py            ← pretraining loop
+├── generate.py         ← text generation script
+└── README.md
 ```
 
 ---
+
+## Setup
+```bash
+pip install torch tokenizers
+```
+
+## Download Dataset
+```bash
+mkdir data
+curl -o data/input.txt https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
+```
 
 ## How to Train
 ```bash
@@ -25,6 +48,72 @@ python train.py
 ```bash
 python generate.py
 ```
+
+---
+
+## Model Architecture
+
+```
+Input tokens (B, T)
+        ↓
+Token Embedding + Positional Embedding
+        ↓
+┌─────────────────────────┐
+│   Transformer Block × 6  │
+│  ┌───────────────────┐  │
+│  │    LayerNorm       │  │
+│  │    Masked MHA      │  │
+│  │    Residual +      │  │
+│  │    LayerNorm       │  │
+│  │    FeedForward     │  │
+│  │    Residual +      │  │
+│  └───────────────────┘  │
+└─────────────────────────┘
+        ↓
+Final LayerNorm
+        ↓
+Linear → logits (vocab_size)
+```
+
+---
+
+## Hyperparameters
+
+| Parameter     | Value  | Explanation                     |
+|---------------|--------|---------------------------------|
+| d_model       | 256    | embedding dimension             |
+| n_heads       | 8      | attention heads                 |
+| n_layers      | 6      | transformer blocks              |
+| block_size    | 128    | context length                  |
+| batch_size    | 64     | sequences per step              |
+| vocab_size    | 1000   | custom BPE vocabulary           |
+| learning rate | 3e-4   | AdamW optimizer                 |
+| max_iters     | 10000  | total training steps            |
+| dropout       | 0.2    | regularization                  |
+| scheduler     | Cosine | learning rate decay             |
+
+---
+
+## Tokenizer
+Custom Byte Pair Encoding (BPE) tokenizer trained on Shakespeare data.
+
+| Tokenizer       | Vocab size | Suitability        |
+|-----------------|------------|--------------------|
+| Character level | 65         | too basic          |
+| Custom BPE      | 1000       | perfect ✅          |
+| GPT-2 pretrained| 50,257     | too large          |
+
+---
+
+## Training Results
+
+| Step  | Train Loss | Val Loss | Perplexity |
+|-------|------------|----------|------------|
+| 0     | 7.079      | 6.86     | 962.71     |
+| 200   | 4.317      | 4.372    | 79.25      |
+| 2000  | 3.05       | 3.52     | 33.80      |
+| 5000  | 2.58       | 3.42     | 30.67      |
+| 9800  | 2.46       | 3.46     | 31.92      |
 
 ---
 
@@ -92,45 +181,20 @@ No, he's one
 ```
 
 ---
+## Screenshots
 
-## Architecture
-```
-Token + Positional Embeddings
-       ↓
-Transformer Block × 6
-  └── LayerNorm → Masked MHA → Residual
-  └── LayerNorm → FFN → Residual
-       ↓
-LayerNorm → Linear → logits
-```
+### Training Loss
+![Training Loss](train.png)
 
----
+### Generated Output
+![Output](output_sample.png)
+## Key Concepts Implemented
 
-## Hyperparameters
-
-| Parameter     | Value  |
-|---------------|--------|
-| d_model       | 256    |
-| n_heads       | 8      |
-| n_layers      | 6      |
-| block_size    | 128    |
-| batch_size    | 64     |
-| vocab_size    | 1000   |
-| learning rate | 3e-4   |
-| max_iters     | 10000  |
-| dropout       | 0.2    |
-
----
-
-## Tokenizer
-Custom BPE tokenizer trained on Shakespeare data.
-Vocab size 1000 — better than character level (65),
-smaller than GPT2 (50257).
-
-## Loss on training
-step 9600 | train 2.4423 | val 3.5417 | ppl 34.53
-step 9800 | train 2.4648 | val 3.4633 | ppl 31.92
-Training complete!
-
-training loss = 2.4648
-val_loss = 3.4633
+- Causal (masked) self-attention
+- Multi-head attention with projection
+- Residual connections
+- Pre-norm layer normalisation
+- GELU activation in FFN
+- Cosine learning rate scheduling
+- Gradient clipping
+- Train/val split with best model saving
