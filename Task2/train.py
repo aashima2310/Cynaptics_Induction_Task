@@ -7,7 +7,7 @@ from DataLoader import load_alpaca_dataset
 # hyperparameters
 BLOCK_SIZE  = 256
 BATCH_SIZE  = 16
-EPOCHS      = 1
+EPOCHS      = 2
 LR          = 2e-5
 EVAL_EVERY  = 100
 DEVICE      = 'cuda' if torch.cuda.is_available() else 'cpu'
