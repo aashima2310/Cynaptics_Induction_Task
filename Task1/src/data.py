@@ -6,13 +6,12 @@ def load_data(file_path):
     with open(file_path, 'r') as f:
         text = f.read()
 
-    # train tokenizer if not already trained
     if not os.path.exists('shakespeare-vocab.json'):
         tokenizer = train_tokenizer(file_path, vocab_size=1000)
     else:
         tokenizer = load_tokenizer()
 
-    # encode full text
+    
     encoded    = tokenizer.encode(text).ids
     vocab_size = tokenizer.get_vocab_size()
 
