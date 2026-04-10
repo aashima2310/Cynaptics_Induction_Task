@@ -82,6 +82,7 @@ if __name__ == "__main__":
     model.eval()
     print("Model loaded!\n")
 
+    # sample tests — saved to txt file
     tests = [
         ("Write a short poem about the moon", ""),
         ("Explain what gravity is in simple terms", ""),
@@ -91,6 +92,7 @@ if __name__ == "__main__":
         ("Give me 3 tips for better sleep", ""),
     ]
 
+    # save outputs to txt
     save_outputs(model, tokenizer, tests)
 
     interactive_mode(model, tokenizer)
